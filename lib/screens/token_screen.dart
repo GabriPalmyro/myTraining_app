@@ -7,12 +7,28 @@ class TokenScreen extends StatefulWidget {
 }
 
 class _TokenScreenState extends State<TokenScreen> {
-  String token;
+  void _creatToken() {
+    setState(() {
+      int min = 100000;
+      int max = 999999;
+      //var atualTime = DateTime.now();
+      //var finalTime = atualTime.add(Duration(seconds: 30));
+      var randomizer = new Random();
+      token = (min + randomizer.nextInt(max - min)).toString();
+      // while (atualTime != finalTime) {}
+      token = "Token expirado";
+    });
+    print(token);
+    //min and max values act as your 6 digit range
+  }
+
+  String token = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: Text("Token"),
+          centerTitle: true,
         ),
         backgroundColor: Color(0xff313131),
         body: Center(
@@ -21,15 +37,7 @@ class _TokenScreenState extends State<TokenScreen> {
             children: [
               RaisedButton(
                 onPressed: () {
-                  setState(() {
-                    int min = 100000;
-                    int max = 999999;
-                    var randomizer = new Random();
-                    token = (min + randomizer.nextInt(max - min)).toString();
-                  });
-
-                  print(token);
-                  //min and max values act as your 6 digit range
+                  _creatToken();
                 },
                 child: Icon(Icons.create),
               ),

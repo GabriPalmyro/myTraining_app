@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:tabela_treino/models/user_model.dart';
 import 'package:tabela_treino/screens/home_screen.dart';
-import 'package:tabela_treino/screens/intro_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override

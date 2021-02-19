@@ -4,11 +4,18 @@ import 'package:flutter/material.dart';
 import 'muscle_screen.dart';
 
 class MuscleListScreen extends StatefulWidget {
+  final String treinoId;
+  final bool addMode;
+  MuscleListScreen(this.addMode, this.treinoId);
   @override
-  _MuscleListScreenState createState() => _MuscleListScreenState();
+  _MuscleListScreenState createState() =>
+      _MuscleListScreenState(addMode, treinoId);
 }
 
 class _MuscleListScreenState extends State<MuscleListScreen> {
+  final String treinoId;
+  final bool addMode;
+  _MuscleListScreenState(this.addMode, this.treinoId);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +52,8 @@ class _MuscleListScreenState extends State<MuscleListScreen> {
                   return GestureDetector(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => MuscleScreen(title)));
+                          builder: (context) =>
+                              MuscleScreen(title, addMode, treinoId)));
                     },
                     child: Container(
                       decoration: BoxDecoration(

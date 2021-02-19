@@ -5,59 +5,15 @@ import 'package:tabela_treino/tabs/planilha_tab.dart';
 import 'package:tabela_treino/widgets/custom_drawer.dart';
 import 'package:tabela_treino/models/user_model.dart';
 
-import 'intro_screen.dart';
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
 
-class HomeScreen extends StatelessWidget {
+class _HomeScreenState extends State<HomeScreen> {
   final _pageController = PageController();
-
-  Future<void> _signOutDialog(BuildContext context, UserModel model) async {
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            elevation: 0,
-            backgroundColor: Color(0xff313131),
-            title: Text(
-              'Deseja mesmo sair\nda sua conta?',
-              style: TextStyle(
-                  color: Colors.white, fontFamily: "GothamThin", fontSize: 25),
-            ),
-            actions: <Widget>[
-              // ignore: deprecated_member_use
-              FlatButton(
-                color: Colors.white,
-                textColor: Colors.black,
-                child: Text(
-                  'CANCELAR',
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-              // ignore: deprecated_member_use
-              FlatButton(
-                color: Colors.red,
-                textColor: Colors.white,
-                child: Text(
-                  'SAIR',
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                  model.signOut();
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      new MaterialPageRoute(
-                          builder: (BuildContext context) => IntroScreen()),
-                      (Route<dynamic> route) => false);
-                },
-              ),
-            ],
-          );
-        });
-  }
+  int _currentIndex = 0;
+  final List<Widget> _screens = [HomeTab(), PlanilhaScreen(), PlanilhaScreen()];
 
   @override
   Widget build(BuildContext context) {
@@ -69,24 +25,22 @@ class HomeScreen extends StatelessWidget {
           children: [
             Scaffold(
               backgroundColor: Color(0xff313131),
-              appBar: AppBar(
-                title: Text(
-                  "Início",
-                  style: TextStyle(fontSize: 30, fontFamily: "GothamBold"),
-                ),
-                centerTitle: true,
-                actions: [
-                  IconButton(
-                    icon: const Icon(Icons.logout),
-                    color: Colors.red,
-                    tooltip: 'Log Out',
-                    onPressed: () {
-                      _signOutDialog(context, model);
-                    },
-                  ),
+              /*bottomNavigationBar: BottomNavigationBar(
+                backgroundColor: Colors.white,
+                unselectedItemColor: Color(0xff313131),
+                iconSize: 30,
+                onTap: onTabTapped,
+                currentIndex: 0,
+                items: [
+                  BottomNavigationBarItem(
+                      icon: Icon(Icons.home), label: "Home"),
+                  BottomNavigationBarItem(
+                      icon: Icon(Icons.list), label: "Planilhas"),
+                  BottomNavigationBarItem(
+                      icon: Icon(Icons.person), label: "Perfil"),
                 ],
-              ),
-              body: HomeTab(),
+              ),*/
+              body: _screens[_currentIndex],
             ),
             Scaffold(
               appBar: AppBar(
@@ -103,5 +57,11 @@ class HomeScreen extends StatelessWidget {
         );
       },
     );
+  }
+
+  void onTabTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
   }
 }

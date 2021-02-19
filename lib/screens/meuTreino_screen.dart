@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:tabela_treino/models/user_model.dart';
 
+import 'musclesList_screen.dart';
+
 class TreinoScreen extends StatefulWidget {
   final String treinoId;
   final String title;
@@ -81,7 +83,8 @@ class _TreinoScreenState extends State<TreinoScreen> {
           child: FittedBox(
             child: FloatingActionButton(
               onPressed: () {
-                //_displayTextInputDialog(context);
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => MuscleListScreen(true, treinoId)));
               },
               child: Icon(Icons.add),
               backgroundColor: Colors.grey[700],
@@ -123,6 +126,7 @@ class _TreinoScreenState extends State<TreinoScreen> {
               .collection("planilha")
               .doc(treinoId)
               .collection("exercícios")
+              .orderBy("pos")
               .get(),
           builder: (context, snapshot) {
             var doc = snapshot.data;
@@ -144,107 +148,113 @@ class _TreinoScreenState extends State<TreinoScreen> {
                 ),
               );
             } else {
-              return ListView.builder(
-                  padding: EdgeInsets.all(5),
-                  itemCount: snapshot.data.docs.length,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {},
-                      child: Container(
-                        margin: EdgeInsets.all(10),
-                        height: 150,
-                        decoration: BoxDecoration(
-                          borderRadius:
-                              new BorderRadius.all(new Radius.circular(20.0)),
-                          color: Theme.of(context).primaryColor,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.4),
-                              spreadRadius: 3,
-                              blurRadius: 7,
-                              offset:
-                                  Offset(2, 5), // changes position of shadow
-                            ),
-                          ],
-                        ),
-                        child: ListView(
-                          physics: BouncingScrollPhysics(),
-                          padding: EdgeInsets.fromLTRB(10, 10, 20, 0),
-                          children: [
-                            Text(
+              return SafeArea(
+                child: ListView.builder(
+                    physics: BouncingScrollPhysics(),
+                    padding: EdgeInsets.all(5),
+                    itemCount: snapshot.data.docs.length,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {},
+                        child: Container(
+                          margin: EdgeInsets.all(20),
+                          height: 150,
+                          decoration: BoxDecoration(
+                            borderRadius:
+                                new BorderRadius.all(new Radius.circular(20.0)),
+                            color: Theme.of(context).primaryColor,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.4),
+                                spreadRadius: 3,
+                                blurRadius: 7,
+                                offset:
+                                    Offset(2, 5), // changes position of shadow
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
                                 snapshot.data.docs[index]["title"]
                                     .toString()
                                     .toUpperCase(),
                                 style: TextStyle(
-                                    fontSize: 23, fontFamily: "GothamBold")),
-                            Divider(
-                              color: Colors.black,
-                            ),
-                            Text(snapshot.data.docs[index]["description"],
-                                style: TextStyle(
-                                    fontSize: 15, fontFamily: "GothamBook")),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Column(
-                                  children: [
-                                    Text("Séries",
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            fontFamily: "Gotham")),
-                                    SizedBox(
-                                      height: 3,
-                                    ),
-                                    Text(snapshot.data.docs[index]["series"],
-                                        style: TextStyle(
-                                            fontSize: 18,
-                                            fontFamily: "GothamBook")),
-                                  ],
-                                ),
-                                Column(
-                                  children: [
-                                    Text("Repetições",
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            fontFamily: "Gotham")),
-                                    SizedBox(
-                                      height: 3,
-                                    ),
-                                    Text(snapshot.data.docs[index]["reps"],
-                                        style: TextStyle(
-                                            fontSize: 18,
-                                            fontFamily: "GothamBook")),
-                                  ],
-                                ),
-                                Column(
-                                  children: [
-                                    Text("Carga",
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            fontFamily: "Gotham")),
-                                    SizedBox(
-                                      height: 3,
-                                    ),
-                                    Text(
-                                        "${snapshot.data.docs[index]["peso"].toString()}kg",
-                                        style: TextStyle(
-                                            fontSize: 18,
-                                            fontFamily: "GothamBook")),
-                                  ],
-                                )
-                              ],
-                            ),
-                            SizedBox(
-                              height: 10,
-                            )
-                          ],
+                                    fontSize: 23, fontFamily: "GothamBold"),
+                                textAlign: TextAlign.center,
+                              ),
+                              Divider(
+                                color: Colors.black,
+                              ),
+                              /*Text(snapshot.data.docs[index]["description"],
+                                  style: TextStyle(
+                                      fontSize: 15, fontFamily: "GothamBook")),*/
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Column(
+                                    children: [
+                                      Text("Séries",
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontFamily: "Gotham")),
+                                      SizedBox(
+                                        height: 3,
+                                      ),
+                                      Text(snapshot.data.docs[index]["series"],
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              fontFamily: "GothamBook")),
+                                    ],
+                                  ),
+                                  Column(
+                                    children: [
+                                      Text("Repetições",
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontFamily: "Gotham")),
+                                      SizedBox(
+                                        height: 3,
+                                      ),
+                                      Text(snapshot.data.docs[index]["reps"],
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              fontFamily: "GothamBook")),
+                                    ],
+                                  ),
+                                  Column(
+                                    children: [
+                                      Text("Carga",
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontFamily: "Gotham")),
+                                      SizedBox(
+                                        height: 3,
+                                      ),
+                                      Text(
+                                          "${snapshot.data.docs[index]["peso"].toString()}kg",
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              fontFamily: "GothamBook")),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    );
-                  });
+                      );
+                    }),
+              );
             }
           },
         ),

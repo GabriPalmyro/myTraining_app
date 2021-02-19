@@ -174,62 +174,65 @@ class _PlanilhaScreenState extends State<PlanilhaScreen> {
                 child: CircularProgressIndicator(),
               );
             else {
-              return ListView.builder(
-                  padding: EdgeInsets.all(5),
-                  itemCount: snapshot.data.docs.length,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        print("${snapshot.data.docs[index].id}");
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => TreinoScreen(
-                                snapshot.data.docs[index]["title"],
-                                snapshot.data.docs[index].id)));
-                      },
-                      child: Container(
-                        margin: EdgeInsets.all(10),
-                        height: 130,
-                        decoration: BoxDecoration(
-                          borderRadius:
-                              new BorderRadius.all(new Radius.circular(30.0)),
-                          color: Theme.of(context).primaryColor,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.4),
-                              spreadRadius: 3,
-                              blurRadius: 7,
-                              offset:
-                                  Offset(2, 5), // changes position of shadow
-                            ),
-                          ],
-                        ),
+              return SafeArea(
+                child: ListView.builder(
+                    physics: BouncingScrollPhysics(),
+                    padding: EdgeInsets.all(5),
+                    itemCount: snapshot.data.docs.length,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          print("${snapshot.data.docs[index].id}");
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => TreinoScreen(
+                                  snapshot.data.docs[index]["title"],
+                                  snapshot.data.docs[index].id)));
+                        },
                         child: Container(
-                          margin: EdgeInsets.only(left: 10, right: 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                snapshot.data.docs[index]["title"]
-                                    .toString()
-                                    .toUpperCase(),
-                                style: TextStyle(
-                                    fontSize: 25, fontFamily: "GothamBold"),
-                                textAlign: TextAlign.center,
-                              ),
-                              Divider(),
-                              Text(
-                                snapshot.data.docs[index]["description"],
-                                style: TextStyle(
-                                    fontSize: 22, fontFamily: "GothamBook"),
-                                textAlign: TextAlign.center,
+                          margin: EdgeInsets.all(10),
+                          height: 130,
+                          decoration: BoxDecoration(
+                            borderRadius:
+                                new BorderRadius.all(new Radius.circular(30.0)),
+                            color: Theme.of(context).primaryColor,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.4),
+                                spreadRadius: 3,
+                                blurRadius: 7,
+                                offset:
+                                    Offset(2, 5), // changes position of shadow
                               ),
                             ],
                           ),
+                          child: Container(
+                            margin: EdgeInsets.only(left: 10, right: 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  snapshot.data.docs[index]["title"]
+                                      .toString()
+                                      .toUpperCase(),
+                                  style: TextStyle(
+                                      fontSize: 25, fontFamily: "GothamBold"),
+                                  textAlign: TextAlign.center,
+                                ),
+                                Divider(),
+                                Text(
+                                  snapshot.data.docs[index]["description"],
+                                  style: TextStyle(
+                                      fontSize: 22, fontFamily: "GothamBook"),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
-                      ),
-                    );
-                  });
+                      );
+                    }),
+              );
             }
           },
         ),
