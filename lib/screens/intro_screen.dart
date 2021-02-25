@@ -15,23 +15,32 @@ class _IntroScreenState extends State<IntroScreen> {
     return Scaffold(
         key: _scaffoldKey,
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(120),
+          preferredSize: Size.fromHeight(130),
           child: AppBar(
             toolbarHeight: 120,
             shadowColor: Colors.grey[850],
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.vertical(
-                bottom: Radius.elliptical(200, 50),
+                bottom: Radius.elliptical(300, 50),
               ),
             ),
             elevation: 25,
             centerTitle: true,
-            title: Text(
-              "Bem-Vindo",
-              style: TextStyle(
-                  color: Colors.grey[850],
-                  fontFamily: "GothamBold",
-                  fontSize: 30),
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'images/logo.png',
+                  height: 100,
+                ),
+                Text(
+                  "Treine Fácil!",
+                  style: TextStyle(
+                      color: Colors.grey[850],
+                      fontFamily: "GothamBold",
+                      fontSize: 30),
+                ),
+              ],
             ),
             backgroundColor: Theme.of(context).primaryColor,
           ),
@@ -39,9 +48,6 @@ class _IntroScreenState extends State<IntroScreen> {
         backgroundColor: Color(0xff313131),
         body: Column(
           children: [
-            SizedBox(
-              height: 80,
-            ),
             Center(
               child: Column(
                 children: [
@@ -54,13 +60,13 @@ class _IntroScreenState extends State<IntroScreen> {
                           builder: (context) => RegisterScreen()));
                     },
                     child: Container(
-                      width: 230,
-                      height: 60,
+                      width: 250,
+                      height: 70,
                       child: Center(
                         child: Text(
                           "Registre-se",
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 25),
+                              fontWeight: FontWeight.bold, fontSize: 30),
                         ),
                       ),
                       decoration: BoxDecoration(
@@ -77,7 +83,7 @@ class _IntroScreenState extends State<IntroScreen> {
                   ),
                   SizedBox(height: 100),
                   Text(
-                    "Já tem cadastro?",
+                    "Não tem cadastro?",
                     style: TextStyle(
                         color: Colors.white,
                         fontFamily: "GothamLight",
@@ -90,7 +96,7 @@ class _IntroScreenState extends State<IntroScreen> {
                           builder: (context) => LoginScreen()));
                     },
                     child: Text(
-                      "Faça o Login",
+                      "Registre-se aqui!",
                       style: TextStyle(
                           color: Theme.of(context).primaryColor,
                           fontFamily: "GothamBold",

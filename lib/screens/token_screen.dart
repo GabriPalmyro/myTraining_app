@@ -16,7 +16,7 @@ class _TokenScreenState extends State<TokenScreen> {
       var randomizer = new Random();
       token = (min + randomizer.nextInt(max - min)).toString();
       // while (atualTime != finalTime) {}
-      token = "Token expirado";
+      //token = "Token expirado";
     });
     print(token);
     //min and max values act as your 6 digit range
@@ -35,7 +35,7 @@ class _TokenScreenState extends State<TokenScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              RaisedButton(
+              TextButton(
                 onPressed: () {
                   _creatToken();
                 },

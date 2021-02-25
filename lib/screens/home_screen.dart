@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:tabela_treino/tabs/home_tab.dart';
 import 'package:tabela_treino/tabs/planilha_tab.dart';
-import 'package:tabela_treino/widgets/custom_drawer.dart';
+import 'package:tabela_treino/tabs/profile_tab.dart';
 import 'package:tabela_treino/models/user_model.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -13,7 +13,13 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final _pageController = PageController();
   int _currentIndex = 0;
-  final List<Widget> _screens = [HomeTab(), PlanilhaScreen(), PlanilhaScreen()];
+  final List<Widget> _screens = [HomeTab(), PlanilhaScreen(), ProfileTab()];
+
+  void onTabTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,43 +31,43 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Scaffold(
               backgroundColor: Color(0xff313131),
-              /*bottomNavigationBar: BottomNavigationBar(
-                backgroundColor: Colors.white,
-                unselectedItemColor: Color(0xff313131),
-                iconSize: 30,
-                onTap: onTabTapped,
-                currentIndex: 0,
-                items: [
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.home), label: "Home"),
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.list), label: "Planilhas"),
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.person), label: "Perfil"),
-                ],
-              ),*/
-              body: _screens[_currentIndex],
-            ),
-            Scaffold(
-              appBar: AppBar(
-                title: Text(
-                  "Sua planilha",
-                  style: TextStyle(fontSize: 30, fontFamily: "GothamBold"),
+              bottomNavigationBar: Padding(
+                padding: const EdgeInsets.only(bottom: 60),
+                child: BottomNavigationBar(
+                  backgroundColor: Colors.black,
+                  unselectedItemColor: Color(0xff313131),
+                  iconSize: 30,
+                  onTap: onTabTapped,
+                  currentIndex: _currentIndex,
+                  items: [
+                    BottomNavigationBarItem(
+                        icon: Icon(Icons.home), label: "Home"),
+                    BottomNavigationBarItem(
+                        icon: Icon(Icons.list), label: "Planilhas"),
+                    BottomNavigationBarItem(
+                        icon: Icon(Icons.person), label: "Perfil"),
+                  ],
                 ),
-                centerTitle: true,
               ),
-              drawer: CustomDrawer(_pageController),
-              body: PlanilhaScreen(),
+              appBar: AppBar(
+                toolbarHeight: 70,
+                shadowColor: Colors.grey[850],
+                elevation: 25,
+                centerTitle: true,
+                title: Text(
+                  "Treino Fácil",
+                  style: TextStyle(
+                      color: Colors.grey[850],
+                      fontFamily: "GothamBold",
+                      fontSize: 30),
+                ),
+                backgroundColor: Theme.of(context).primaryColor,
+              ),
+              body: _screens[_currentIndex],
             ),
           ],
         );
       },
     );
-  }
-
-  void onTabTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
   }
 }

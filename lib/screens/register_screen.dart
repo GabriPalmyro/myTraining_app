@@ -80,6 +80,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             keyboardType: TextInputType.text,
                             controller: _nameController,
                             style: TextStyle(color: colorPrincipal),
+                            maxLength: 15,
                             decoration: InputDecoration(
                                 enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
@@ -105,6 +106,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             keyboardType: TextInputType.text,
                             controller: _lastNameController,
                             style: TextStyle(color: colorPrincipal),
+                            maxLength: 20,
                             decoration: InputDecoration(
                                 enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
@@ -327,6 +329,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             "last_name": _lastNameController.text,
                             "email": _emailController.text,
                             "sexo": sexo == 0 ? "Homem" : "Mulher",
+                            "payApp": false,
                           };
                           model.singUp(
                               userData: userData,

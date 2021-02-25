@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:tabela_treino/models/user_model.dart';
+import 'package:tabela_treino/screens/register_screen.dart';
 
 import 'home_screen.dart';
 
@@ -26,24 +27,32 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
         key: _scaffoldKey,
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(120),
+          preferredSize: Size.fromHeight(130),
           child: AppBar(
             toolbarHeight: 120,
             shadowColor: Colors.grey[850],
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.vertical(
-                bottom: Radius.elliptical(200, 50),
+                bottom: Radius.elliptical(300, 50),
               ),
             ),
             elevation: 25,
             centerTitle: true,
-            title: Text(
-              "Bem-vindo\nde volta!",
-              style: TextStyle(
-                  color: Colors.grey[850],
-                  fontFamily: "GothamBold",
-                  fontSize: 30),
-              textAlign: TextAlign.center,
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'images/logo.png',
+                  height: 100,
+                ),
+                Text(
+                  "Treine Fácil!",
+                  style: TextStyle(
+                      color: Colors.grey[850],
+                      fontFamily: "GothamBold",
+                      fontSize: 30),
+                ),
+              ],
             ),
             backgroundColor: colorPrincipal,
           ),
@@ -114,7 +123,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         obscureText: _obscureTextPass,
                       ),
                     ),
-                    /*Align(
+                    Align(
                       alignment: Alignment.centerRight,
                       child: TextButton(
                         onPressed: () {
@@ -142,11 +151,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               color: colorPrincipal.withOpacity(0.7),
                               fontFamily: "GothamLight"),
                         ),
-                        padding: EdgeInsets.only(right: 20),
                       ),
-                    ),*/
+                    ),
                     SizedBox(
-                      height: 40,
+                      height: 30,
                     ),
                     GestureDetector(
                       onTap: () {
@@ -156,6 +164,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             pass: _passController.text,
                             onSucess: _onSucess,
                             onFailed: _onFailed);
+
+                        //container animation
                       },
                       child: Container(
                         width: 230,
@@ -179,6 +189,79 @@ class _LoginScreenState extends State<LoginScreen> {
                             ]),
                       ),
                     ),
+                    SizedBox(
+                      height: 80,
+                    ),
+                    Column(
+                      children: [
+                        Text(
+                          "Não tem cadastro?",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: "GothamLight",
+                              fontSize: 15),
+                        ),
+                        SizedBox(height: 20),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => RegisterScreen()));
+                          },
+                          child: Text(
+                            "Registre-se",
+                            style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                                fontFamily: "GothamBold",
+                                fontSize: 30),
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                        GestureDetector(
+                          onTap: () {},
+                          child: Text(
+                            "É Personal? Entre como Personal aqui!",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: "GothamLight",
+                                fontSize: 16),
+                          ),
+                        ),
+                        SizedBox(height: 50),
+                        GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                            width: 150,
+                            height: 60,
+                            child: Center(
+                              child: Row(
+                                children: [
+                                  Image(
+                                    image: AssetImage("images/google_logo.png"),
+                                    height: 40,
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text("ñ funciona")
+                                ],
+                              ),
+                            ),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(30)),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.black.withOpacity(0.2),
+                                      spreadRadius: 3,
+                                      blurRadius: 2,
+                                      offset: Offset(0, 4))
+                                ]),
+                          ),
+                        ),
+                      ],
+                    )
                   ],
                 ));
           },
@@ -190,7 +273,7 @@ class _LoginScreenState extends State<LoginScreen> {
     _scaffoldKey.currentState.showSnackBar(SnackBar(
       content: Text("Vamos lá!"),
       backgroundColor: Colors.green,
-      duration: Duration(seconds: 2),
+      duration: Duration(seconds: 5),
     ));
     Navigator.pushAndRemoveUntil(
         context,
