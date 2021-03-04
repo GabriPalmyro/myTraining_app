@@ -4,6 +4,8 @@ import 'package:tabela_treino/tabs/home_tab.dart';
 import 'package:tabela_treino/tabs/planilha_tab.dart';
 import 'package:tabela_treino/tabs/profile_tab.dart';
 import 'package:tabela_treino/models/user_model.dart';
+import 'package:tabela_treino/ads/ads_model.dart';
+import 'package:tabela_treino/widgets/custom_drawer.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -32,23 +34,9 @@ class _HomeScreenState extends State<HomeScreen> {
             Scaffold(
               backgroundColor: Color(0xff313131),
               bottomNavigationBar: Padding(
-                padding: const EdgeInsets.only(bottom: 60),
-                child: BottomNavigationBar(
-                  backgroundColor: Colors.black,
-                  unselectedItemColor: Color(0xff313131),
-                  iconSize: 30,
-                  onTap: onTabTapped,
-                  currentIndex: _currentIndex,
-                  items: [
-                    BottomNavigationBarItem(
-                        icon: Icon(Icons.home), label: "Home"),
-                    BottomNavigationBarItem(
-                        icon: Icon(Icons.list), label: "Planilhas"),
-                    BottomNavigationBarItem(
-                        icon: Icon(Icons.person), label: "Perfil"),
-                  ],
-                ),
+                padding: EdgeInsets.only(bottom: bottomPadding),
               ),
+              drawer: CustomDrawer(),
               appBar: AppBar(
                 toolbarHeight: 70,
                 shadowColor: Colors.grey[850],

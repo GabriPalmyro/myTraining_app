@@ -2,8 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:tabela_treino/ads/ads_model.dart';
 import 'package:tabela_treino/screens/meuTreino_screen.dart';
 import 'package:tabela_treino/models/user_model.dart';
+import 'package:tabela_treino/widgets/custom_drawer.dart';
 
 class PlanilhaScreen extends StatefulWidget {
   @override
@@ -21,13 +23,14 @@ class _PlanilhaScreenState extends State<PlanilhaScreen> {
         backgroundColor: Colors.grey[850],
         context: context,
         builder: (context) {
-          return ListView(
+          return Column(
             children: [
               Container(
                 color: Colors.grey[850],
                 height: MediaQuery.of(context).size.height * 0.4,
                 margin: EdgeInsets.all(20),
-                child: Column(
+                child: ListView(
+                  physics: BouncingScrollPhysics(),
                   children: [
                     Text(
                       "Criar novo treino: ",
@@ -181,21 +184,40 @@ class _PlanilhaScreenState extends State<PlanilhaScreen> {
           .then((value) {
         payApp = value.data()["payApp"];
       });
+      print(bottomPadding);
       return Scaffold(
+        drawer: CustomDrawer(),
+        appBar: AppBar(
+          toolbarHeight: 70,
+          shadowColor: Colors.grey[850],
+          elevation: 25,
+          centerTitle: true,
+          title: Text(
+            "Planilhas",
+            style: TextStyle(
+                color: Colors.grey[850],
+                fontFamily: "GothamBold",
+                fontSize: 30),
+          ),
+          backgroundColor: Theme.of(context).primaryColor,
+        ),
         key: _scaffoldKey,
-        floatingActionButton: Container(
-          height: 60.0,
-          width: 55.0,
-          child: FittedBox(
-            child: FloatingActionButton(
-              onPressed: () {
-                setState(() {
-                  _displayModalBottom(context);
-                });
-              },
-              child: Icon(Icons.add),
-              backgroundColor: Colors.grey[700],
-              foregroundColor: Theme.of(context).primaryColor,
+        floatingActionButton: Padding(
+          padding: EdgeInsets.only(bottom: 60),
+          child: Container(
+            height: 60.0,
+            width: 55.0,
+            child: FittedBox(
+              child: FloatingActionButton(
+                onPressed: () {
+                  setState(() {
+                    _displayModalBottom(context);
+                  });
+                },
+                child: Icon(Icons.add),
+                backgroundColor: Colors.grey[700],
+                foregroundColor: Theme.of(context).primaryColor,
+              ),
             ),
           ),
         ),
@@ -215,7 +237,7 @@ class _PlanilhaScreenState extends State<PlanilhaScreen> {
               return SafeArea(
                 child: ListView.builder(
                     shrinkWrap: true,
-                    physics: ScrollPhysics(),
+                    physics: BouncingScrollPhysics(),
                     padding: EdgeInsets.all(5),
                     itemCount: snapshot.data.docs.length,
                     itemBuilder: (context, index) {

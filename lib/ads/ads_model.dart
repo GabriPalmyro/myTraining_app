@@ -1,6 +1,8 @@
 import 'package:firebase_admob/firebase_admob.dart';
 
-final bannerAdIdAndroid = "ca-app-pub-7831186229252322/6565373735";
+import 'package:flutter/material.dart';
+
+final bannerAdIdAndroid = "ca-app-pub-7831186229252322/6549223566";
 final intertstitialAdIdAndroid = "ca-app-pub-7831186229252322/7884973074";
 
 MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
@@ -14,6 +16,8 @@ BannerAd myBanner;
 InterstitialAd myInterstitial;
 bool isInterstitialAdReady;
 
+double bottomPadding = 0;
+
 void startBanner() {
   myBanner = BannerAd(
     adUnitId: bannerAdIdAndroid,
@@ -21,6 +25,7 @@ void startBanner() {
     targetingInfo: targetingInfo,
     listener: (MobileAdEvent event) {
       if (event == MobileAdEvent.opened) {
+        bottomPadding = 60;
         // MobileAdEvent.opened
         // MobileAdEvent.clicked
         // MobileAdEvent.closed

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_admob/firebase_admob.dart';
 
 import 'package:tabela_treino/ads/ads_model.dart';
+import 'package:tabela_treino/transition/transitions.dart';
+import 'package:tabela_treino/widgets/custom_drawer.dart';
 import 'muscle_screen.dart';
 
 class MuscleListScreen extends StatefulWidget {
@@ -28,14 +30,14 @@ class _MuscleListScreenState extends State<MuscleListScreen> {
             myInterstitial?.show();
           }
           if (event == MobileAdEvent.clicked || event == MobileAdEvent.closed) {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => MuscleScreen(title, addMode, treinoId)));
+            Navigator.push(context,
+                SlideLeftRoute(page: MuscleScreen(title, addMode, treinoId)));
             adClick = 0;
             myInterstitial.dispose();
           }
           if (event == MobileAdEvent.failedToLoad) {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => MuscleScreen(title, addMode, treinoId)));
+            Navigator.push(context,
+                SlideLeftRoute(page: MuscleScreen(title, addMode, treinoId)));
             adClick = 0;
           }
         });
@@ -48,11 +50,12 @@ class _MuscleListScreenState extends State<MuscleListScreen> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(bottom: 50),
+      padding: EdgeInsets.only(bottom: bottomPadding),
       child: Scaffold(
+        drawer: CustomDrawer(),
         appBar: AppBar(
           title: Text(
-            "Músculos",
+            "Exercícios",
             style: TextStyle(fontSize: 30, fontFamily: "GothamBold"),
           ),
           centerTitle: true,
@@ -91,9 +94,11 @@ class _MuscleListScreenState extends State<MuscleListScreen> {
                               ..show();
                           }
                         } else {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) =>
-                                  MuscleScreen(title, addMode, treinoId)));
+                          Navigator.push(
+                              context,
+                              SlideLeftRoute(
+                                  page:
+                                      MuscleScreen(title, addMode, treinoId)));
                         }
                       },
                       child: Container(

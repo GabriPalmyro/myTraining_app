@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:tabela_treino/models/user_model.dart';
 import 'package:tabela_treino/screens/intro_screen.dart';
+import 'package:tabela_treino/tiles/my_account_tile.dart';
+import 'package:tabela_treino/transition/transitions.dart';
+import 'package:tabela_treino/widgets/custom_drawer.dart';
 
 class ProfileTab extends StatefulWidget {
   @override
@@ -67,6 +70,21 @@ class _ProfileTabState extends State<ProfileTab> {
           ),
         );
       return Scaffold(
+          drawer: CustomDrawer(),
+          appBar: AppBar(
+            toolbarHeight: 70,
+            shadowColor: Colors.grey[850],
+            elevation: 25,
+            centerTitle: true,
+            title: Text(
+              "Treino Fácil",
+              style: TextStyle(
+                  color: Colors.grey[850],
+                  fontFamily: "GothamBold",
+                  fontSize: 30),
+            ),
+            backgroundColor: Theme.of(context).primaryColor,
+          ),
           backgroundColor: Color(0xff313131),
           body: Stack(
             alignment: Alignment.center,
@@ -130,8 +148,12 @@ class _ProfileTabState extends State<ProfileTab> {
                         height: 0,
                       ),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                              context, ScaleRoute(page: MyAccount()));
+                        },
                         child: Container(
+                          color: Colors.transparent,
                           padding: EdgeInsets.only(left: 30, right: 20),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -154,6 +176,7 @@ class _ProfileTabState extends State<ProfileTab> {
                       GestureDetector(
                         onTap: () {},
                         child: Container(
+                          color: Colors.transparent,
                           padding: EdgeInsets.only(left: 30, right: 20),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -176,6 +199,7 @@ class _ProfileTabState extends State<ProfileTab> {
                       GestureDetector(
                         onTap: () {},
                         child: Container(
+                          color: Colors.transparent,
                           padding: EdgeInsets.only(left: 30, right: 20),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -198,6 +222,7 @@ class _ProfileTabState extends State<ProfileTab> {
                       GestureDetector(
                         onTap: () {},
                         child: Container(
+                          color: Colors.transparent,
                           padding: EdgeInsets.only(left: 30, right: 20),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -220,6 +245,7 @@ class _ProfileTabState extends State<ProfileTab> {
                       GestureDetector(
                         onTap: () {},
                         child: Container(
+                          color: Colors.transparent,
                           padding: EdgeInsets.only(left: 30, right: 20),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,

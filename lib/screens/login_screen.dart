@@ -3,8 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:tabela_treino/models/user_model.dart';
 import 'package:tabela_treino/screens/register_screen.dart';
-
-import 'home_screen.dart';
+import 'package:tabela_treino/tabs/home_tab.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -69,6 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
             return Form(
                 key: _formKey,
                 child: ListView(
+                  physics: BouncingScrollPhysics(),
                   padding: EdgeInsets.only(top: 40.0, left: 40, right: 40),
                   children: [
                     Container(
@@ -260,6 +260,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ]),
                           ),
                         ),
+                        SizedBox(height: 100)
                       ],
                     )
                   ],
@@ -277,7 +278,7 @@ class _LoginScreenState extends State<LoginScreen> {
     ));
     Navigator.pushAndRemoveUntil(
         context,
-        new MaterialPageRoute(builder: (BuildContext context) => HomeScreen()),
+        new MaterialPageRoute(builder: (BuildContext context) => HomeTab()),
         (Route<dynamic> route) => false);
   }
 

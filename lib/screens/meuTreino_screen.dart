@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:tabela_treino/ads/ads_model.dart';
 import 'package:tabela_treino/models/user_model.dart';
 
 import 'musclesList_screen.dart';
@@ -88,7 +90,7 @@ class _TreinoScreenState extends State<TreinoScreen> {
       });
       return Padding(
         padding:
-            payApp ? EdgeInsets.only(bottom: 0) : EdgeInsets.only(bottom: 50),
+            payApp ? EdgeInsets.only(bottom: 0) : EdgeInsets.only(bottom: 60),
         child: Scaffold(
           floatingActionButton: Container(
             height: 80.0,

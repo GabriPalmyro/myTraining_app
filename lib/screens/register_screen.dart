@@ -260,7 +260,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       ),
                                       child: Center(
                                         child: Text(
-                                          "Homem",
+                                          "Masculino",
                                           style: TextStyle(
                                               color: sexo == 0
                                                   ? Color(0xff313131)
@@ -302,7 +302,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       ),
                                       child: Center(
                                         child: Text(
-                                          "Mulher",
+                                          "Feminino",
                                           style: TextStyle(
                                               color: sexo == 1
                                                   ? Color(0xff313131)
@@ -328,7 +328,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             "name": _nameController.text,
                             "last_name": _lastNameController.text,
                             "email": _emailController.text,
-                            "sexo": sexo == 0 ? "Homem" : "Mulher",
+                            "sexo": sexo == 0 ? "Masculino" : "Feminino",
                             "payApp": false,
                           };
                           model.singUp(

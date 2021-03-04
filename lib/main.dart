@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_admob/firebase_admob.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +6,7 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'package:tabela_treino/screens/login_screen.dart';
-import 'package:tabela_treino/screens/home_screen.dart';
+import 'package:tabela_treino/tabs/home_tab.dart';
 
 import 'ads/ads_model.dart';
 import 'models/user_model.dart';
@@ -15,6 +14,10 @@ import 'models/user_model.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
       systemNavigationBarColor: Colors.transparent,
@@ -53,6 +56,12 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void dispose() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
     myBanner?.dispose();
     myInterstitial?.dispose();
     super.dispose();
@@ -87,7 +96,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    if (_auth.currentUser != null) {
+    /*if (_auth.currentUser != null) {
       FirebaseFirestore.instance
           .collection("users")
           .doc(_auth.currentUser.uid)
@@ -95,7 +104,7 @@ class _MyAppState extends State<MyApp> {
           .then((value) {
         payApp = value.data()["payApp"];
       });
-    }
+    }*/
     return ScopedModel<UserModel>(
         model: UserModel(),
         child: MaterialApp(
@@ -105,7 +114,7 @@ class _MyAppState extends State<MyApp> {
             primaryColor: const Color(0xffffd200),
           ),
           debugShowCheckedModeBanner: false,
-          home: _auth.currentUser == null ? LoginScreen() : HomeScreen(),
+          home: _auth.currentUser == null ? LoginScreen() : HomeTab(),
         ));
   }
 }

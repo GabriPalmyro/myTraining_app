@@ -3,7 +3,9 @@ import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:tabela_treino/ads/ads_model.dart';
 import 'package:tabela_treino/models/user_model.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class MuscleScreen extends StatefulWidget {
   final String treinoId;
@@ -46,7 +48,7 @@ class _MuscleScreenState extends State<MuscleScreen> {
                 color: Colors.grey[850],
                 height: 1000,
                 margin: EdgeInsets.all(20),
-                child: Column(
+                child: ListView(
                   children: [
                     FittedBox(
                       fit: BoxFit.cover,
@@ -62,6 +64,7 @@ class _MuscleScreenState extends State<MuscleScreen> {
                     Divider(
                       color: Colors.white,
                     ),
+                    SizedBox(height: 10),
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
@@ -505,7 +508,7 @@ class _MuscleScreenState extends State<MuscleScreen> {
   Widget build(BuildContext context) {
     return ScopedModelDescendant<UserModel>(builder: (context, child, model) {
       return Padding(
-        padding: EdgeInsets.only(bottom: 50),
+        padding: EdgeInsets.only(bottom: bottomPadding),
         child: Scaffold(
           key: _scaffoldKey,
           appBar: AppBar(
@@ -521,38 +524,89 @@ class _MuscleScreenState extends State<MuscleScreen> {
                   .collection("musculos")
                   .doc(title.toLowerCase())
                   .collection("exercícios")
+                  .orderBy("title")
                   .snapshots(),
               builder: (context, snapshot) {
                 var doc = snapshot.data;
                 if (doc == null)
                   return Center(child: CircularProgressIndicator());
-                //print(title.toLowerCase());
-                //print(doc.docs.length);
+                print(title.toLowerCase());
+                print(doc.docs.length);
                 if (!snapshot.hasData)
                   return Center(
                     child: CircularProgressIndicator(),
                   );
                 else
-                  return ListView.builder(
-                      physics: BouncingScrollPhysics(),
-                      padding: EdgeInsets.all(7),
-                      itemCount: snapshot.data.docs.length,
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onDoubleTap: addMode
-                              ? () {
-                                  _displayModalBottom(
-                                      context, doc, model, index);
+                  return SafeArea(
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: ScrollPhysics(),
+                        padding: EdgeInsets.all(7),
+                        itemCount: snapshot.data.docs.length,
+                        itemBuilder: (context, index) {
+                          return Column(
+                            children: [
+                              GestureDetector(
+                                onDoubleTap: addMode
+                                    ? () {
+                                        _displayModalBottom(
+                                            context, doc, model, index);
 
-                                  print(
-                                      "${doc.docs[index]["title"]} :  ${model.firebaseUser.uid}");
-                                }
-                              : () {
-                                  print("AINDA NOPE");
-                                },
-                          child: Container(
-                            padding: EdgeInsets.all(7),
-                            margin: EdgeInsets.all(8),
+                                        print(
+                                            "${doc.docs[index]["title"]} :  ${model.firebaseUser.uid}");
+                                      }
+                                    : () {
+                                        print("AINDA NOPE");
+                                      },
+                                child: Container(
+                                  margin: EdgeInsets.all(10),
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.9,
+                                  height: 80,
+                                  decoration: BoxDecoration(
+                                    borderRadius: new BorderRadius.all(
+                                        new Radius.circular(10.0)),
+                                    color: Theme.of(context).primaryColor,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.4),
+                                        spreadRadius: 3,
+                                        blurRadius: 7,
+                                        offset: Offset(
+                                            2, 5), // changes position of shadow
+                                      ),
+                                    ],
+                                  ),
+                                  child: Container(
+                                    margin:
+                                        EdgeInsets.only(left: 10, right: 10),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        AutoSizeText(
+                                          snapshot.data.docs[index]["title"]
+                                              .toString()
+                                              .toUpperCase(),
+                                          maxLines: 3,
+                                          style: TextStyle(
+                                              fontSize: 25,
+                                              fontFamily: "GothamBold"),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                          /*Container(
+                            height: MediaQuery.of(context).size.height * .07,
+                            padding: EdgeInsets.only(left: 10),
+                            margin: EdgeInsets.all(10),
                             decoration: BoxDecoration(
                               color: Theme.of(context).primaryColor,
                               boxShadow: [
@@ -565,34 +619,39 @@ class _MuscleScreenState extends State<MuscleScreen> {
                                 ),
                               ],
                             ),
-                            child: Theme(
-                              data: Theme.of(context)
-                                  .copyWith(accentColor: Colors.grey[700]),
-                              child: ExpansionTile(
-                                  title: Text(
-                                    doc.docs[index]["title"],
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontFamily: "GothamBold",
-                                    ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  doc.docs[index]["title"],
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 30,
+                                    fontFamily: "Gotham",
                                   ),
-                                  children: [
-                                    Text(
-                                      doc.docs[index]["description"],
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        fontFamily: "GothamBook",
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    )
-                                  ]),
+                                  textAlign: TextAlign.center,
+                                ),
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: IconButton(
+                                      icon: Icon(Icons.add),
+                                      onPressed: addMode
+                                          ? () {
+                                              _displayModalBottom(
+                                                  context, doc, model, index);
+
+                                              print(
+                                                  "${doc.docs[index]["title"]} :  ${model.firebaseUser.uid}");
+                                            }
+                                          : () {
+                                              print("AINDA NOPE");
+                                            }),
+                                )
+                              ],
                             ),
-                          ),
-                        );
-                      });
+                          );*/
+                        }),
+                  );
               }),
         ),
       );
